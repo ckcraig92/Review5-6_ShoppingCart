@@ -2,13 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.InteropServices.WindowsRuntime;
+
 
 namespace Review5_6_ShoppingCart
 {
     internal class Program
     {
+
+        public static List<Product> ReadData(string fileName)
+        {
+            using(SteamReader sr = new StreamReader(fileName)) 
+            
+            {
+                Dictionary<int, Product> retVal = new StreamReader(fileName)
+                string line = string.Empty;
+
+                while ((line = sr.ReadLine()) != null)
+                {
+                    string[] parts = line.Split(new char[] { '\t' });
+                    Product p = new Products(Convert.ToInt32(strings[0]), parts[1], Convert.ToDouble(parts[2]), Convert.ToInt32(parts[3]));
+                    retVal.Add(Convert.ToInt32(parts[0], p));
+
+            }
+                return retval;
+
         //declarations
 
         static void Main(string[] args)
@@ -64,11 +86,26 @@ namespace Review5_6_ShoppingCart
             Console.Read();
 
             Console.WriteLine("After checking out");
+
+
+            SecureString writeToFile = "";
+
             foreach (KeyValuePair<int, Product> kvp in products) 
             {
                 kvp.Value.DisplayFullDetails();
+
+                Product product = kvp.Value;
+                writeToFile += kvp.Value.ToString();
+
             }
-        
+            File.WriteAllText(@"C:\", writeToFile);
+
+            Console.WriteLine("After reading from file");
+            string readFromFile = "";
+            readFromFile = File.ReadAllText(@"C:\timothy\files\products.txt");
+            Console.WriteLine(readFromFile);
+
+            Console.Read();
           //create class
           class Product
             {
@@ -94,10 +131,12 @@ namespace Review5_6_ShoppingCart
                 Console.WriteLine(this.ID + "\t" + this.Name + "\t") + this.Price +"\t" + this.Stock);
             }
 
-
+            public string ToString()
+            {
+                return $"{this.ID}\t{this.Name}\t{this.Price}
+            }
         }
        
-        
         }
     }
 
